@@ -36,8 +36,8 @@ public class Subsets {
         );
         currentSet.pop();
 
-//        while (index +1 < numbers.size() && numbers.get(index).equals(numbers.get(index +1)))
-//            index ++;
+        while (index +1 < numbers.size() && numbers.get(index).equals(numbers.get(index +1)))
+            index ++;
 
         helper(
                 index +1,

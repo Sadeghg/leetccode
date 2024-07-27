@@ -17,33 +17,33 @@ public class Combinations {
 
     private static void helperVariantOne(
             int number,
-            Stack<Integer> currentCombination,
-            Stack<List<Integer>> combinations,
+            Stack<Integer> candidates,
+            Stack<List<Integer>> elected,
             int end,
             int size
     ) {
-        if (currentCombination.size() == size) {
-            combinations.push(List.copyOf(currentCombination));
+        if (candidates.size() == size) {
+            elected.push(List.copyOf(candidates));
             return;
         }
 
         if (number > end)
             return;
 
-        currentCombination.push(number);
+        candidates.push(number);
         helperVariantOne(
                 number + 1,
-                currentCombination,
-                combinations,
+                candidates,
+                elected,
                 end,
                 size
         );
-        currentCombination.pop();
+        candidates.pop();
 
         helperVariantOne(
                 number + 1,
-                currentCombination,
-                combinations,
+                candidates,
+                elected,
                 end,
                 size
         );
@@ -54,8 +54,8 @@ public class Combinations {
             Stack<Integer> currentCombination,
             Stack<List<Integer>> combination,
             int end,
-            int size // 3
-    ) { // {1, }
+            int size
+    ) { 
         if (currentCombination.size() == size) {
             combination.push(List.copyOf(currentCombination));
             return;

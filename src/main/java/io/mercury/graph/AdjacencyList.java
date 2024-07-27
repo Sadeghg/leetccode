@@ -1,18 +1,44 @@
 package io.mercury.graph;
 
 import java.util.*;
+
 public class AdjacencyList {
 
-    public  HashMap<String, ArrayList<String>> buildAdjList() {
+    public static void main(String[] args) {
+        Map<String, List<String>> adjList = new HashMap<>();
+
+        adjList.put("A", List.of("B"));
+        adjList.put("B", List.of("A", "C", "E"));
+        adjList.put("E", List.of("B", "H", "S"));
+        adjList.put("S", List.of("Z"));
+        adjList.put("H", List.of("E", "Z", "X"));
+        adjList.put("Z", List.of("H", "S", "U"));
+
+        int path = dfs(
+                "A",
+                "U",
+                adjList,
+                new HashSet<>()
+        );
+        System.out.println("Halt");
+    }
+
+    public HashMap<String, ArrayList<String>> buildAdjList() {
         HashMap<String, ArrayList<String>> adjList = new HashMap<>();
 
-        String[][] edges = {{"A", "B"}, {"B", "C"}, {"B", "E"}, {"C", "E"}, {"E", "D"}};
+        String[][] edges = {
+                {"A", "B"},
+                {"B", "C"},
+                {"B", "E"},
+                {"C", "E"},
+                {"E", "D"}
+        };
         HashSet<String> visit = new HashSet<>();
 
-        adjList.put("A", new ArrayList<String>());
-        adjList.put("B", new ArrayList<String>());
+        adjList.put("A", new ArrayList<>());
+        adjList.put("B", new ArrayList<>());
 
-        for (String[] edge: edges) {
+        for (String[] edge : edges) {
             String src = edge[0], dst = edge[1];
             if (!adjList.containsKey(src)) {
                 adjList.put(src, new ArrayList<String>());
@@ -26,25 +52,38 @@ public class AdjacencyList {
     }
 
     // Count paths (backtracking)
-    public int dfs(String node, String target, HashMap<String, ArrayList<String>> adjList, HashSet<String> visit) {
+    public static int dfs(
+            String node,
+            String target,
+            Map<String, List<String>> adjList,
+            Set<String> visit
+    ) {
         if (visit.contains(node)) {
             return 0;
         }
-        if (node == target) {
+        if (node.equals(target)) {
             return 1;
         }
         int count = 0;
-        visit = new HashSet<String>();
         visit.add(node);
-        for (String neighbor: adjList.get(node)) {
-            count+=dfs(neighbor, target, adjList, visit);
+        for (String neighbor : adjList.getOrDefault(node, new ArrayList<>())) {
+            count += dfs(
+                    neighbor,
+                    target,
+                    adjList,
+                    visit
+            );
         }
         visit.remove(node);
         return count;
     }
 
     // Shortest path from node to target.
-    public int bfs(String node, String target, HashMap<String, ArrayList<String>> adjList) {
+    public int bfs(
+            String node,
+            String target,
+            HashMap<String, ArrayList<String>> adjList
+    ) {
         int length = 0;
         HashSet<String> visit = new HashSet<String>();
         Queue<String> q = new LinkedList<String>();
@@ -59,7 +98,7 @@ public class AdjacencyList {
                 if (curr.equals(target)) {
                     return length;
                 }
-                for (String neighbor: adjList.get(curr)) {
+                for (String neighbor : adjList.get(curr)) {
                     if (!visit.contains(neighbor)) {
                         visit.add(neighbor);
                         q.add(neighbor);
@@ -72,13 +111,13 @@ public class AdjacencyList {
     }
 
 
-public static class GraphNode {
-    int val;
-    List<GraphNode> neighbors;
+    public static class GraphNode {
+        int val;
+        List<GraphNode> neighbors;
 
-    public GraphNode(int val) {
-        this.val = val;
-        this.neighbors = new ArrayList<GraphNode>();
+        public GraphNode(int val) {
+            this.val = val;
+            this.neighbors = new ArrayList<GraphNode>();
+        }
     }
-}
 }

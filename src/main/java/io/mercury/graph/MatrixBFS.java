@@ -1,13 +1,14 @@
 package io.mercury.graph;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
+import java.util.*;
 
 public class MatrixBFS {
-    int[][] grid = {{0, 0, 0, 0},
+    int[][] grid = {
+            {0, 0, 0, 0},
             {1, 1, 0, 0},
             {0, 0, 0, 1},
-            {0, 1, 0, 0}};
+            {0, 1, 0, 0}
+    };
 
     // Shortest path from top left to bottom right
     public int bfs(int[][] grid) {
@@ -16,7 +17,7 @@ public class MatrixBFS {
         int[][] visit = new int[4][4];
         Deque<int[]> queue = new ArrayDeque<>();
 
-        queue.add(new int[2]); // Add {0, 0}
+        queue.add(new int[]{0,0}); // Add {0, 0}
         visit[0][0] = 1;
 
         int length = 0;

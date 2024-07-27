@@ -1,6 +1,7 @@
 package io.mercury.backtracking;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Permutations {
 
@@ -16,9 +17,10 @@ public class Permutations {
     }
 
 
+
     private static List<List<Integer>> helper(
-            int index, // numbers = 1, 2, 3, 4
-            List<Integer> numbers // Index = 3
+            int index,
+            List<Integer> numbers
     ){
 
         if (index == numbers.size()){
@@ -57,5 +59,16 @@ public class Permutations {
             permutations = current;
         }
         return permutations;
+    }
+
+
+
+
+    private static List<Integer> fill(int[]nums){
+        List<Integer> numbers = new ArrayList<>();
+        for (Integer num: nums){
+            numbers.add(num);
+        }
+        return numbers;
     }
 }
